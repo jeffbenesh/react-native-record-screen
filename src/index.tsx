@@ -1,4 +1,4 @@
-import { NativeModules, Dimensions } from 'react-native';
+import { NativeEventEmitter, NativeModules, Dimensions } from 'react-native';
 
 export const RecordingResult = {
   Started: 'started',
@@ -41,6 +41,10 @@ type RecordScreenNativeModule = {
 
 const { RecordScreen } = NativeModules;
 
+if (!RecordScreen){
+  throw new Error("RecordScreen native module is not linked");
+
+}
 const RS = RecordScreen as RecordScreenNativeModule;
 
 class ReactNativeRecordScreenClass {

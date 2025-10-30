@@ -8,7 +8,7 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:7.2.1"
+    classpath "com.android.tools.build:gradle:8.5.2"
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
@@ -46,20 +46,17 @@ def supportsNamespace() {
 }
 
 android {
-  if (supportsNamespace()) {
-    namespace "com.recordscreen"
 
-    sourceSets {
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+  namespace "com.recordscreen"
+  sourceSets {
       main {
         manifest.srcFile "src/main/AndroidManifestNew.xml"
       }
     }
-  }
-  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
-
   defaultConfig {
-    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
-    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    minSdk getExtOrIntegerDefault("minSdkVersion")
+    targetSdk getExtOrIntegerDefault("targetSdkVersion")
     buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
   }
   buildTypes {
@@ -68,15 +65,21 @@ android {
     }
   }
 
-  lintOptions {
+  lint {
     disable "GradleCompatible"
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
   }
-
+  kotlinOptions {
+      jvmTarget = "17"
+  }
+  packagingOptions {
+    pickFirst '**/libc++_shared.so'
+    pickFirst '**/libjsc.so'
+  }
 }
 
 repositories {
@@ -93,6 +96,9 @@ dependencies {
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation "com.github.HBiSoft:HBRecorder:3.0.3"
+  implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation "androidx.activity:activity-ktx:1.9.3"
+    implementation "androidx.fragment:fragment-ktx:1.8.5"
 }
 
 if (isNewArchitectureEnabled()) {
