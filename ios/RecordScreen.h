@@ -1,23 +1,25 @@
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 #import <ReplayKit/ReplayKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface RecordScreen : NSObject <RCTBridgeModule>
+@interface RecordScreen : RCTEventEmitter <RCTBridgeModule>
 
-    @property (strong, nonatomic) RPScreenRecorder *screenRecorder;
-    @property (strong, nonatomic) AVAssetWriterInput *videoInput;
-    @property (strong, nonatomic) AVAssetWriterInput *audioInput;
-    @property (strong, nonatomic) AVAssetWriterInput *micInput;
-    @property (assign, nonatomic) int screenWidth;
-    @property (assign, nonatomic) int screenHeight;
-    @property (assign, nonatomic) BOOL enableMic;
-    @property (assign, nonatomic) int fps;
-    @property (assign, nonatomic) int bitrate;
+@property (nonatomic, strong) RPScreenRecorder *screenRecorder;
+@property (nonatomic, strong) AVAssetWriterInput *videoInput;
+@property (nonatomic, strong) AVAssetWriterInput *audioInput;
+@property (nonatomic, strong) AVAssetWriterInput *micInput;
+@property (nonatomic, assign) int screenWidth;
+@property (nonatomic, assign) int screenHeight;
+@property (nonatomic, assign) BOOL enableMic;
+@property (nonatomic, assign) int fps;
+@property (nonatomic, assign) int bitrate;
+@property (nonatomic, strong) AVAssetWriter *writer;
+@property (nonatomic, assign) BOOL encounteredFirstBuffer;
 
-    @property (nonatomic) AVAssetWriter *writer;
-    @property BOOL encounteredFirstBuffer;
-    @property CMSampleBufferRef afterAppBackgroundAudioSampleBuffer;
-    @property CMSampleBufferRef afterAppBackgroundMicSampleBuffer;
-    @property CMSampleBufferRef afterAppBackgroundVideoSampleBuffer;
+// CF types
+@property (nonatomic, assign) CMSampleBufferRef afterAppBackgroundAudioSampleBuffer;
+@property (nonatomic, assign) CMSampleBufferRef afterAppBackgroundMicSampleBuffer;
+@property (nonatomic, assign) CMSampleBufferRef afterAppBackgroundVideoSampleBuffer;
 
 @end
