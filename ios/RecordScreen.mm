@@ -1,5 +1,13 @@
 #import "RecordScreen.h"
 #import <React/RCTConvert.h>
+#import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
+
+#import <React/RCTFabricComponentsPlugins.h>
+#import <React/RCTTurboModule.h>
+#import <ReactCommon/RCTTurboModule.h>
+#import <ReactCommon/ReactTurboModuleSpec.h>
+#import <memory> // 👈 for std::make_shared
 
 @implementation RecordScreen
 
