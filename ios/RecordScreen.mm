@@ -3,12 +3,13 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
 
+#ifdef RCT_NEW_ARCH_ENABLED
 #import <React/RCTFabricComponentsPlugins.h>
 #import <React/RCTTurboModule.h>
 #import <ReactCommon/RCTTurboModule.h>
 #import <ReactCommon/ReactTurboModuleSpec.h>
 #import <memory> // 👈 for std::make_shared
-
+#endif
 @implementation RecordScreen
 
 UIBackgroundTaskIdentifier _backgroundRenderingID;
@@ -349,9 +350,10 @@ RCT_REMAP_METHOD(clean,
 #pragma mark - New architecture (TurboModule) support
 
 #ifdef RCT_NEW_ARCH_ENABLED
-- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
+    (const facebook::react::ObjCTurboModule::InitParams &)params
 {
-  return std::make_shared<facebook::react::NativeRecordScreenSpecJSI>(params);
+    return nullptr;
 }
 #endif
 
